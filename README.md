@@ -1,86 +1,88 @@
 # HostIQ - Airbnb Host Intelligence Platform
 
-A data driven dashboard for Airbnb hosts in Paris, providing pricing optimization and guest feedback analysis.
+A data driven platform for Airbnb hosts, providing ML powered pricing optimization and NLP based guest feedback analysis.
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## Overview
+---
 
-HostIQ Paris helps Airbnb hosts optimize their listings through:
+## Part 1: The Dashboard App
 
-- **Smart Pricing Engine** - ML-based price predictions using Random Forest
-- **Guest Feedback Intelligence** - NLP-powered review analysis with sentiment scoring
-- **Portfolio Dashboard** - Visual analytics for multi-property hosts
+The Streamlit dashboard provides visual analytics for Airbnb hosts, running on **sample data of 209 hosts based in Paris**.
 
-## Features
+### Features
 
-### Dashboard Views
-1. **Overview** - Key metrics, alerts, and property map
-2. **Revenue** - Price optimization recommendations
-3. **Quality & Actions** - Review insights and improvement suggestions
+- **Overview** - Key metrics, property map, and host ratings breakdown
+- **Revenue** - Price optimization with ML predictions vs. actual prices
+- **Quality & Actions** - Guest sentiment analysis and improvement recommendations
 
-### Key Capabilities
-- Price vs. predicted price comparison
-- Sentiment analysis of guest reviews
-- Automated identification of property advantages/disadvantages
-- Actionable recommendations based on review patterns
+### Live Demo
 
-## Project Structure
+**[https://hostiq-paris.onrender.com](https://hostiq-paris.onrender.com)**
 
-```
-hostiq_app/
-├── app.py                          # Streamlit application
-├── property_data.csv               # Property-level data (one row per property)
-├── host_data.csv                   # Host-level aggregated data
-├── requirements.txt                # Python dependencies
-├── render.yaml                     # Render deployment config
-└── notebooks/
-    ├── data_preparation.ipynb      # Data preprocessing pipeline
-    ├── Smart Pricing Engine.ipynb  # ML pricing model
-    └── Guest Feedback Intelligence System(paris_data).ipynb  # NLP analysis
-```
-
-## Installation
-
-### Prerequisites
-- Python 3.10 or higher
-- pip package manager
-
-### Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/pazgold9/hostiq-paris.git
-   cd hostiq-paris/hostiq_app
-   ```
-
-2. **Create virtual environment** (recommended)
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Running the Application
-
-### Local Development
+### Run Locally
 
 ```bash
-cd hostiq_app
+# Clone and navigate
+git clone https://github.com/pazgold9/hostiq-paris.git
+cd hostiq-paris/hostiq_app
+
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies and run
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
 The app will be available at `http://localhost:8501`
 
-### Production Deployment (Render)
+---
 
-The app is configured for deployment on Render. Simply connect your GitHub repository and Render will automatically deploy using `render.yaml`.
+## Part 2: Property Analysis Notebook
 
-**Live Demo:** [https://hostiq-paris.onrender.com](https://hostiq-paris.onrender.com)
+The **Select Property ID.ipynb** notebook allows you to analyze any individual property from the dataset.
 
+### What It Does
+
+1. **Price Prediction** - Enter a property ID and get the market fair price according to our Smart Pricing Engine
+2. **Review Intelligence Report** - Get a detailed analysis including:
+   - Sentiment analysis of all reviews (using DistilBERT)
+   - Category ratings (Cleanliness, Communication, Check-in, Location, Value)
+   - Extracted advantages and disadvantages with frequency counts
+   - Actionable suggestions sourced from Airbnb's knowledge base
+
+### Usage
+
+1. Open `Select Property ID.ipynb`
+2. Set your property ID in the `PROPERTY_ID` variable
+3. Run all cells to get the price prediction and review intelligence report
+
+---
+
+## Part 3: Training Notebooks (Databricks)
+
+The notebooks in `notebooks/` contain the ML and NLP pipelines used to generate the model and processed data. These are designed to run on **Databricks** and will take a significant amount of time to complete.
+
+| Notebook | Purpose |
+|----------|---------|
+| `Smart Pricing Engine.ipynb` | Training for price prediction |
+| `Guest Feedback Intelligence System (graphs).ipynb` | Training NLP sentiment analysis and visualization |
+| `poi_data_collection.ipynb` | Points of Interest data collection for location features |
+
+---
+
+## Part 4: Knowledge Base Scraping (Bright Data)
+
+The **collect_Listing_Quality_Knowledge_Base.py** script uses [Bright Data](https://brightdata.com/) scraping browser to collect Airbnb help articles for the suggestion system.
+
+> **Note:** This repository contains **only the scraping code**, not the scraped data. The script demonstrates how to use Playwright with Bright Data's proxy to access Airbnb's help center articles.
+
+### What It Collects
+
+- Airbnb host tips and best practices
+- Help articles on cleanliness, communication, pricing, etc.
+- Content used to generate actionable suggestions in the Review Intelligence Report
