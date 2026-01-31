@@ -14,6 +14,10 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 import streamlit_antd_components as sac
 from streamlit_pills import pills
 
+sas_token = "sp=rle&st=2026-01-25T10:55:58Z&se=2026-03-01T19:10:58Z&spr=https&sv=2024-11-04&sr=c&sig=jgt2r2TSHpDaCyEfTEgHAfkvEvy49xReFDS4Mg9KnOA%3D"
+storage_account = "lab94290"
+base_url = f"https://{storage_account}.blob.core.windows.net/submissions/Adi_Maya_Paz"
+
 # ============== PAGE CONFIG ==============
 st.set_page_config(
     page_title="HostIQ Paris",
@@ -167,11 +171,11 @@ def load_data():
     Load pre-prepared data files.
     Data preparation is done in data_preparation.ipynb
     """
-    # Load property data (one row per property)
-    property_data = pd.read_csv('property_data.csv')
+
+    property_data = pd.read_csv(f"{base_url}/property_data.csv?{sas_token}")
     
     # Load host data (one row per host - aggregated)
-    host_data = pd.read_csv('host_data.csv')
+    host_data = pd.read_csv(f"{base_url}/host_data.csv?{sas_token}")
     
     # Create merged dataframe for the app (property data with host info)
     merged = property_data.merge(
