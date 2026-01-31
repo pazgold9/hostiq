@@ -325,7 +325,7 @@ selected_tab = sac.segmented(
 
 add_vertical_space(2)
 
-# ============== TAB: DASHBOARD ("מה המצב שלי?") ==============
+# ============== TAB: DASHBOARD OVERVIEW ==============
 if selected_tab == "📊 Overview":
     
     # Quick Status Alerts - use Property_Sentiment (real data when available)
@@ -385,7 +385,7 @@ if selected_tab == "📊 Overview":
         # Use calculated weighted sentiment for portfolio
         sentiment_display = f"{avg_sentiment*100:.0f}%" if pd.notna(avg_sentiment) else "N/A"
         metrics = [
-            (int(host_info['Property_Count']), "Properties", "#667eea"),
+            (len(filtered_properties), "Properties", "#667eea"),
             (f"{host_info['Host_Rating']:.1f}", "Avg Rating", "#10b981"),
             (f"€{host_info['Avg_Price']:.0f}", "Avg Price/Night", "#f59e0b"),
             (sentiment_display, "Sentiment Score", "#8b5cf6")
@@ -494,7 +494,7 @@ if selected_tab == "📊 Overview":
     
 
 
-# ============== TAB: REVENUE ("איך להרוויח יותר?") ==============
+# ============== TAB: REVENUE ==============
 elif selected_tab == "💰 Revenue":
     
     st.markdown("### 💰 How to Increase Revenue?")
@@ -633,7 +633,7 @@ elif selected_tab == "💰 Revenue":
         # Price vs Predicted chart removed per user request
 
 
-# ============== TAB: QUALITY & ACTIONS (מאוחד) ==============
+# ============== TAB: QUALITY & ACTIONS ==============
 elif selected_tab == "⭐ Quality & Actions":
     
     st.markdown("### ⭐ Guest Feedback & Recommended Actions")
