@@ -4,19 +4,26 @@ Using Real Review Intelligence Data
 """
 from __future__ import annotations
 
+import os
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+from dotenv import load_dotenv
 from streamlit_extras.stylable_container import stylable_container
 from streamlit_extras.add_vertical_space import add_vertical_space
 import streamlit_antd_components as sac
 from streamlit_pills import pills
 
-sas_token = "sp=rle&st=2026-01-25T10:55:58Z&se=2026-03-01T19:10:58Z&spr=https&sv=2024-11-04&sr=c&sig=jgt2r2TSHpDaCyEfTEgHAfkvEvy49xReFDS4Mg9KnOA%3D"
-storage_account = "lab94290"
-base_url = f"https://{storage_account}.blob.core.windows.net/submissions/Adi_Maya_Paz"
+# Load environment variables from .env file
+load_dotenv()
+
+# Azure Blob Storage configuration
+storage_account = os.getenv("AZURE_STORAGE_ACCOUNT")
+sas_token = os.getenv("AZURE_SAS_TOKEN")
+container_path = os.getenv("AZURE_CONTAINER_PATH")
+base_url = f"https://{storage_account}.blob.core.windows.net/{container_path}"
 
 # ============== PAGE CONFIG ==============
 st.set_page_config(
